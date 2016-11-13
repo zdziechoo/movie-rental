@@ -10,7 +10,7 @@ public class MovieRental {
 	
 	public void addCarrier(Carrier add_carrier){
 		movies.add(add_carrier);
-		//mam w¹tpliwoœci czy taki zapis jest prawid³owy/zalecany
+
 	}
 	
 	public void rentCarrier(Carrier rent_carrier) throws CarrierAlreadyRentException{
@@ -18,7 +18,7 @@ public class MovieRental {
 			throw new CarrierAlreadyRentException();
 		}
 		rent_carrier.setAvailavble(false);
-		//metoda do implementacji
+		//to do
 	}
 	
 	public List<Carrier> getMovies() {
