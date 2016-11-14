@@ -3,15 +3,18 @@ package com.zdziechowski.movierental.carrier;
 public class Videotape implements Carrier {
 	private String title;
 	private String category;
-	boolean available; // when true - available, false - loaned
+	private boolean available = true; // when true - available, false - loaned
 
-	final String carrier = "videotape";
+	private final String carrier = "videotape";
 
 	public Videotape(String name, String category) {
 		super();
 		this.title = name;
 		this.category = category;
 		this.available = true;
+	}
+
+	public Videotape() {
 	}
 
 	@Override

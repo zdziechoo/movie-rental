@@ -3,14 +3,17 @@ package com.zdziechowski.movierental.carrier;
 public class Dvd implements Carrier {
 	private String title;
 	private String category;
-	boolean available; // when true - available, false - loaned
-	final String carrier = "dvd";
+	private boolean available = true; // when true - available, false - loaned
+	private final String carrier = "dvd";
 
 	public Dvd(String name, String category) {
 		super();
 		this.title = name;
 		this.category = category;
 		this.available = true;
+	}
+
+	public Dvd() {
 	}
 
 	public String getName() {

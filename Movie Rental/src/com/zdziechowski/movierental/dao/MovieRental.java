@@ -4,11 +4,11 @@ import java.util.List;
 
 import com.zdziechowski.movierental.carrier.*;
 
-public class MovieRental {
+class MovieRental {
 	List<Carrier> movies = new ArrayList<Carrier>();
-	
-	
-	public void addCarrier(Carrier add_carrier){
+
+
+	private void addCarrier(Carrier add_carrier) {
 		movies.add(add_carrier);
 
 	}
@@ -18,7 +18,7 @@ public class MovieRental {
 			throw new CarrierAlreadyRentException();
 		}
 		rent_carrier.setAvailavble(false);
-		//to do
+
 	}
 	
 	public List<Carrier> getMovies() {
@@ -28,5 +28,8 @@ public class MovieRental {
 	public void setMovies(List<Carrier> movies) {
 		this.movies = movies;
 	}
-	
+
+	private boolean isEmpty() {
+		return movies.isEmpty();
+	}
 }
