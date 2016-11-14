@@ -8,7 +8,7 @@ class MovieRental {
 	List<Carrier> movies = new ArrayList<Carrier>();
 
 
-	private void addCarrier(Carrier add_carrier) {
+	public void addCarrier(Carrier add_carrier) {
 		movies.add(add_carrier);
 
 	}
@@ -29,7 +29,7 @@ class MovieRental {
 		this.movies = movies;
 	}
 
-	private boolean isEmpty() {
+	public boolean isEmpty() {
 		return movies.isEmpty();
 	}
 }
