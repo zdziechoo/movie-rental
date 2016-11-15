@@ -4,13 +4,12 @@ import java.util.List;
 
 import com.zdziechowski.movierental.carrier.*;
 
-class MovieRental {
+public class MovieRental {
 	List<Carrier> movies = new ArrayList<Carrier>();
 
 
 	public void addCarrier(Carrier add_carrier) {
 		movies.add(add_carrier);
-
 	}
 	
 	public void rentCarrier(Carrier rent_carrier) throws CarrierAlreadyRentException{
@@ -22,7 +21,13 @@ class MovieRental {
 	}
 	
 	public List<Carrier> getMovies() {
-		return movies;
+		List<Carrier> result = new ArrayList<>();
+		for (Carrier m : movies) {
+			if (m instanceof Videotape) {
+				result.add(new Videotape(m.getName(), m.getCategory()));
+			}
+		}
+		return result;
 	}
 
 	public void setMovies(List<Carrier> movies) {
