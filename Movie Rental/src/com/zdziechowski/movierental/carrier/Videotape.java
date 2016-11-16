@@ -5,8 +5,6 @@ public class Videotape implements Carrier {
 	private String category;
 	private boolean available = true; // when true - available, false - loaned
 
-	private final String carrier = "videotape";
-
 	public Videotape(String name, String category) {
 		super();
 		this.title = name;
@@ -39,17 +37,17 @@ public class Videotape implements Carrier {
 
 	@Override
 	public String getCarrier() {
-		return carrier;
+		return "videotape";
 	}
 
 	@Override
-	public boolean isAvailavble() {
+	public boolean isAvailable() {
 		// TODO Auto-generated method stub
 		return available;
 	}
 
 	@Override
-	public void setAvailavble(boolean status) {
+	public void setAvailable(boolean status) {
 		// TODO Auto-generated method stub
 		this.available = status;
 	}

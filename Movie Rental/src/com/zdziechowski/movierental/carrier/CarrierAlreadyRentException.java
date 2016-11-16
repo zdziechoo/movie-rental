@@ -1,11 +1,9 @@
 package com.zdziechowski.movierental.carrier;
 
 public class CarrierAlreadyRentException extends RuntimeException {
-    private static String CARRIERMESSAGE = "Carrier already rent";
 
-    public static String getCarrierAlreadyRent() {
-        return CARRIERMESSAGE;
+    @SuppressWarnings("SameReturnValue")
+    private static String getCarrierAlreadyRent() {
+        return "Carrier already rent";
     }
-
-
 }

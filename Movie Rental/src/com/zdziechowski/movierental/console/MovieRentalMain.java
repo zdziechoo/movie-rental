@@ -10,10 +10,13 @@ import java.util.*;
 import com.zdziechowski.movierental.carrier.*;
 import com.zdziechowski.movierental.dao.MovieRental;
 
-public class MovieRentalMain {
-    private static MovieRental mvrental = new MovieRental();
-    private static Character option = 'x';
-    private static Scanner scanner = new Scanner(System.in);
+import static com.zdziechowski.movierental.console.Option.*;
+
+
+class MovieRentalMain {
+    private static final MovieRental movierental = new MovieRental();
+    private static Option o;
+    private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         // TODO Auto-generated method stub
@@ -23,43 +26,9 @@ public class MovieRentalMain {
         //o.invoke
         loadSampleData();
         printMenu();
-
-
-        while (!option.equals('e')) {
-            //'e' means exit
-
-            //option = menu();
-            switch (option) {
-                case '1':
-                    addVideotape();
-                    break;
-                case '2':
-                    addDvd();
-                    break;
-                case '3':
-                    rentVideotape();
-                    break;
-                case '4':
-                    rentDvd();
-                    break;
-                case '5':
-                    showMovies(mvrental.getMovies());
-                    break;
-                case '6':
-                    sortMoviesByCategory(mvrental.getMovies());
-                    break;
-                case '7':
-                    sortMoviesByTitle(mvrental.getMovies());
-                    break;
-                case 'e':
-                    System.out.println("END");
-                    break;
-                default:
-                    System.out.println("I don't understand");
-            }
-        }
+        readOption();
+        o.invoke();
     }
-
 
     private static void addVideotape() {
         Carrier newCarrier = new Videotape();
@@ -68,7 +37,7 @@ public class MovieRentalMain {
         newCarrier.setName(scanner.nextLine());
         System.out.println("Set category: ");
         newCarrier.setCategory(scanner.nextLine());
-        mvrental.addCarrier(newCarrier);
+        movierental.addCarrier(newCarrier);
     }
 
     private static void addDvd() {
@@ -78,7 +47,7 @@ public class MovieRentalMain {
         newCarrier.setName(scanner.nextLine());
         System.out.println("Set category: ");
         newCarrier.setCategory(scanner.nextLine());
-        mvrental.addCarrier(newCarrier);
+        movierental.addCarrier(newCarrier);
     }
 
     private static void rentVideotape() {
@@ -92,21 +61,53 @@ public class MovieRentalMain {
     private static void printMenu() {
 
             System.out.println("******MENU******");
-            System.out.println("1 - add videotape");
-            System.out.println("2 - add dvd");
-            System.out.println("3 - rent videotape");
-            System.out.println("4 - rent dvd");
-            System.out.println("5 - show carriers");
-            System.out.println("6 - sort carriers by category");
-            System.out.println("7 - sort carriers by title");
-            System.out.println("e - end");
+        System.out.println(ADD_VIDEOTAPE.getDescription());
+        System.out.println(ADD_DVD.getDescription());
+        System.out.println(Option.RENT_VIDEOTAPE.getDescription());
+        System.out.println(Option.RENT_DVD.getDescription());
+        System.out.println(Option.SHOW_CARRIERS.getDescription());
+        System.out.println(Option.SORT_CARRIERS_BY_CATEGORY.getDescription());
+        System.out.println(Option.SORT_CARRIERS_BY_TITLE.getDescription());
+        System.out.println(Option.END_THE_PROGRAM.getDescription());
             System.out.print("> ");
-            option = scanner.next().charAt(0);
+    }
 
+    private static void readOption() {
+        Character c = scanner.next().charAt(0);
+        while (!c.equals('0')) {
+            switch (c) {
+                case '1':
+                    o = ADD_VIDEOTAPE;
+                    break;
+                case '2':
+                    o = ADD_DVD;
+                    break;
+                case '3':
+                    o = RENT_VIDEOTAPE;
+                    break;
+                case '4':
+                    o = RENT_DVD;
+                    break;
+                case '5':
+                    o = SHOW_CARRIERS;
+                    break;
+                case '6':
+                    o = SORT_CARRIERS_BY_CATEGORY;
+                    break;
+                case '7':
+                    o = SORT_CARRIERS_BY_TITLE;
+                    break;
+                case '0':
+                    o = END_THE_PROGRAM;
+                    break;
+                default:
+                    o = INCORRECT_INSCRIPTION;
+            }
+        }
     }
 
     private static void loadSampleData() {
-        if (mvrental.isEmpty()) {
+        if (movierental.isEmpty()) {
             //adding sample data
             Dvd dvd1 = new Dvd("Terminator", "action");
             Dvd dvd2 = new Dvd("Terminator 2", "action");
@@ -117,14 +118,14 @@ public class MovieRentalMain {
             Videotape video2 = new Videotape("Avengers", "action");
             Videotape video3 = new Videotape("Pocahontas 2", "for kids");
 
-            mvrental.addCarrier(dvd1);
-            mvrental.addCarrier(dvd2);
-            mvrental.addCarrier(dvd3);
-            mvrental.addCarrier(dvd4);
+            movierental.addCarrier(dvd1);
+            movierental.addCarrier(dvd2);
+            movierental.addCarrier(dvd3);
+            movierental.addCarrier(dvd4);
 
-            mvrental.addCarrier(video1);
-            mvrental.addCarrier(video2);
-            mvrental.addCarrier(video3);
+            movierental.addCarrier(video1);
+            movierental.addCarrier(video2);
+            movierental.addCarrier(video3);
         }
     }
 
@@ -133,7 +134,7 @@ public class MovieRentalMain {
         for (Carrier carrier : movies) {
             System.out.println("Title: " + carrier.getName() + ", Category: "
                     + carrier.getCategory() + ", carrier: " + carrier.getCarrier()
-                    + ", available: " + carrier.isAvailavble());
+                    + ", available: " + carrier.isAvailable());
         }
 
     }

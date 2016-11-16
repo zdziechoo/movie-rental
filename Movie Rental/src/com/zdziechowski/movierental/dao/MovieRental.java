@@ -5,7 +5,7 @@ import java.util.List;
 import com.zdziechowski.movierental.carrier.*;
 
 public class MovieRental {
-	List<Carrier> movies = new ArrayList<Carrier>();
+	private List<Carrier> movies = new ArrayList<>();
 
 
 	public void addCarrier(Carrier add_carrier) {
@@ -13,10 +13,10 @@ public class MovieRental {
 	}
 	
 	public void rentCarrier(Carrier rent_carrier) throws CarrierAlreadyRentException{
-		if(!rent_carrier.isAvailavble()){
+		if (!rent_carrier.isAvailable()) {
 			throw new CarrierAlreadyRentException();
 		}
-		rent_carrier.setAvailavble(false);
+		rent_carrier.setAvailable();
 
 	}
 	

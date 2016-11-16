@@ -4,7 +4,6 @@ public class Dvd implements Carrier {
 	private String title;
 	private String category;
 	private boolean available = true; // when true - available, false - loaned
-	private final String carrier = "dvd";
 
 	public Dvd(String name, String category) {
 		super();
@@ -32,16 +31,16 @@ public class Dvd implements Carrier {
 		this.category = category;
 	}
 
-	public boolean isAvailavble() {
+	public boolean isAvailable() {
 		return available;
 	}
 
-	public void setAvailavble(boolean status) {
+	public void setAvailable(boolean status) {
 		this.available = status;
 	}
 
 	public String getCarrier() {
-		return carrier;
+		return "dvd";
 	}
 
 }
