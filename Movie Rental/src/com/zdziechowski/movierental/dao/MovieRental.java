@@ -8,19 +8,30 @@ public class MovieRental {
 	private List<Carrier> movies = new ArrayList<>();
 
 
-	public void addCarrier(Carrier add_carrier) {
-		movies.add(add_carrier);
-	}
-	
-	public void rentCarrier(Carrier rent_carrier) throws CarrierAlreadyRentException{
-		if (!rent_carrier.isAvailable()) {
-			throw new CarrierAlreadyRentException();
+    public void addCarrier(Carrier addCarrier) {
+        movies.add(addCarrier);
+    }
+
+
+    public void rentCarrier(Carrier rentCarrier) throws CarrierAlreadyRentException {
+        if (!rentCarrier.isAvailable()) {
+            throw new CarrierAlreadyRentException();
 		}
-		rent_carrier.setAvailable();
+        rentCarrier.setAvailable(false);
 
 	}
-	
-	public List<Carrier> getMovies() {
+
+    public void rentCarrierByTitle(String title) throws NoCarrierOrAlreadyRentException {
+        for (Carrier m : movies) {
+            if (m.getName().equals(title) && m.isAvailable()) {
+                m.setAvailable(false);
+                break;
+            }
+            throw new NoCarrierOrAlreadyRentException();
+        }
+    }
+
+    public List<Carrier> getMovies() {
 		List<Carrier> result = new ArrayList<>();
 		for (Carrier m : movies) {
 			if (m instanceof Videotape) {

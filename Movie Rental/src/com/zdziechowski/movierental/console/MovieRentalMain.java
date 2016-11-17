@@ -14,9 +14,9 @@ import static com.zdziechowski.movierental.console.Option.*;
 
 
 class MovieRentalMain {
-    private static final MovieRental movierental = new MovieRental();
+    private static MovieRental movierental = new MovieRental();
     private static Option o;
-    private static final Scanner scanner = new Scanner(System.in);
+    private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         // TODO Auto-generated method stub
@@ -27,35 +27,7 @@ class MovieRentalMain {
         loadSampleData();
         printMenu();
         readOption();
-        o.invoke();
-    }
-
-    private static void addVideotape() {
-        Carrier newCarrier = new Videotape();
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Set title: ");
-        newCarrier.setName(scanner.nextLine());
-        System.out.println("Set category: ");
-        newCarrier.setCategory(scanner.nextLine());
-        movierental.addCarrier(newCarrier);
-    }
-
-    private static void addDvd() {
-        Carrier newCarrier = new Dvd();
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Set title: ");
-        newCarrier.setName(scanner.nextLine());
-        System.out.println("Set category: ");
-        newCarrier.setCategory(scanner.nextLine());
-        movierental.addCarrier(newCarrier);
-    }
-
-    private static void rentVideotape() {
-        //to do
-    }
-
-    private static void rentDvd() {
-        //to do
+        o.invoke(movierental);
     }
 
     private static void printMenu() {
@@ -63,12 +35,12 @@ class MovieRentalMain {
             System.out.println("******MENU******");
         System.out.println(ADD_VIDEOTAPE.getDescription());
         System.out.println(ADD_DVD.getDescription());
-        System.out.println(Option.RENT_VIDEOTAPE.getDescription());
-        System.out.println(Option.RENT_DVD.getDescription());
-        System.out.println(Option.SHOW_CARRIERS.getDescription());
-        System.out.println(Option.SORT_CARRIERS_BY_CATEGORY.getDescription());
-        System.out.println(Option.SORT_CARRIERS_BY_TITLE.getDescription());
-        System.out.println(Option.END_THE_PROGRAM.getDescription());
+        System.out.println(RENT_VIDEOTAPE.getDescription());
+        System.out.println(RENT_DVD.getDescription());
+        System.out.println(SHOW_CARRIERS.getDescription());
+        System.out.println(SORT_CARRIERS_BY_CATEGORY.getDescription());
+        System.out.println(SORT_CARRIERS_BY_TITLE.getDescription());
+        System.out.println(END_THE_PROGRAM.getDescription());
             System.out.print("> ");
     }
 
