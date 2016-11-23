@@ -1,7 +1,7 @@
 package com.zdziechowski.movierental.carrier;
 
 final public class Dvd implements Carrier {
-    private String title;
+	private String title;
 	private String category;
 	private boolean available = true; // when true - available, false - loaned
 

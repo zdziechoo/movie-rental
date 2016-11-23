@@ -1,51 +1,76 @@
 package com.zdziechowski.movierental.dao;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.*;
 
 import com.zdziechowski.movierental.carrier.*;
 
 public class MovieRental {
-	private List<Carrier> movies = new ArrayList<>();
+    //private Deque<Carrier> movies = new ArrayDeque<>();
+    private List<Carrier> movies = new ArrayList<>();
+
+    Comparator<Carrier> byCategory = (c1, c2) -> c1.getCategory().compareTo(c2.getCategory());
+    Comparator<Carrier> byTitle = (c1, c2) -> c1.getName().compareTo(c2.getName());
+
+    public void sortByTitle() {
+        Collections.sort(movies, byTitle);
+    }
+
+    public void sortByCategory() {
+        Collections.sort(movies, byCategory);
+    }
 
 
     public void addCarrier(Carrier addCarrier) {
         movies.add(addCarrier);
     }
 
-
     public void rentCarrier(Carrier rentCarrier) throws CarrierAlreadyRentException {
         if (!rentCarrier.isAvailable()) {
             throw new CarrierAlreadyRentException();
 		}
         rentCarrier.setAvailable(false);
-
 	}
 
     public void rentCarrierByTitle(String title) throws NoCarrierOrAlreadyRentException {
         for (Carrier m : movies) {
             if (m.getName().equals(title) && m.isAvailable()) {
                 m.setAvailable(false);
-                break;
+                return;
             }
             throw new NoCarrierOrAlreadyRentException();
         }
+
     }
 
+    //public Deque<Carrier> getMovies() {
     public List<Carrier> getMovies() {
-		List<Carrier> result = new ArrayList<>();
-		for (Carrier m : movies) {
-			if (m instanceof Videotape) {
-				result.add(new Videotape(m.getName(), m.getCategory()));
-			}
-		}
+
+        //Deque<Carrier> result = new ArrayDeque<>();
+        List<Carrier> result = new ArrayList<>();
+        for (Carrier m : movies) {
+            if (m instanceof Videotape) result.add(new Videotape(m.getName(), m.getCategory()));
+            if (m instanceof Dvd) result.add(new Dvd(m.getName(), m.getCategory()));
+        }
 		return result;
 	}
 
-	public void setMovies(List<Carrier> movies) {
-		this.movies = movies;
+    /*public void setMovies(Deque<Carrier> movies) {
+        this.movies = movies;
+    }*/
+    public void setMovies(List<Carrier> movies) {
+        this.movies = movies;
+    }
+
+    public boolean isEmpty() {
+        return movies.isEmpty();
 	}
 
-	public boolean isEmpty() {
-		return movies.isEmpty();
-	}
+    public void print() {
+
+        System.out.println("w wypozyczalni mamy: " + movies.size() + " filmow");
+        //Array:
+        System.out.println(movies.get(movies.size() - 1).getName());
+        // Deque
+        // System.out.println(movies.getLast().getName());
+    }
 }

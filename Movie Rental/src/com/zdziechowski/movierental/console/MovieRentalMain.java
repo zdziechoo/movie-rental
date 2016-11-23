@@ -10,76 +10,56 @@ import java.util.*;
 import com.zdziechowski.movierental.carrier.*;
 import com.zdziechowski.movierental.dao.MovieRental;
 
-import static com.zdziechowski.movierental.console.Option.*;
+import static com.zdziechowski.movierental.console.Option.END_THE_PROGRAM;
+import static java.util.stream.Stream.of;
 
 
 class MovieRentalMain {
-    private static MovieRental movierental = new MovieRental();
-    private static Option o;
+    private static MovieRental movieRental = new MovieRental();
     private static Scanner scanner = new Scanner(System.in);
-
+    private static boolean end = false;
     public static void main(String[] args) {
         // TODO Auto-generated method stub
-        //loadSampleData()
-        //printMenu
-        //Option o = readOption
-        //o.invoke
+
         loadSampleData();
-        printMenu();
-        readOption();
-        o.invoke(movierental);
-    }
-
-    private static void printMenu() {
-
-            System.out.println("******MENU******");
-        System.out.println(ADD_VIDEOTAPE.getDescription());
-        System.out.println(ADD_DVD.getDescription());
-        System.out.println(RENT_VIDEOTAPE.getDescription());
-        System.out.println(RENT_DVD.getDescription());
-        System.out.println(SHOW_CARRIERS.getDescription());
-        System.out.println(SORT_CARRIERS_BY_CATEGORY.getDescription());
-        System.out.println(SORT_CARRIERS_BY_TITLE.getDescription());
-        System.out.println(END_THE_PROGRAM.getDescription());
-            System.out.print("> ");
-    }
-
-    private static void readOption() {
-        Character c = scanner.next().charAt(0);
-        while (!c.equals('0')) {
-            switch (c) {
-                case '1':
-                    o = ADD_VIDEOTAPE;
-                    break;
-                case '2':
-                    o = ADD_DVD;
-                    break;
-                case '3':
-                    o = RENT_VIDEOTAPE;
-                    break;
-                case '4':
-                    o = RENT_DVD;
-                    break;
-                case '5':
-                    o = SHOW_CARRIERS;
-                    break;
-                case '6':
-                    o = SORT_CARRIERS_BY_CATEGORY;
-                    break;
-                case '7':
-                    o = SORT_CARRIERS_BY_TITLE;
-                    break;
-                case '0':
-                    o = END_THE_PROGRAM;
-                    break;
-                default:
-                    o = INCORRECT_INSCRIPTION;
+        while (!end) {
+            printMenu();
+            movieRental.print();
+            try {
+                Option o = readOption();
+                if (!o.equals(END_THE_PROGRAM)) {
+                    o.invoke(movieRental);
+                } else end = true;
+            } catch (InvalidOptionException e) {
+                System.out.println(e.getMessage());
             }
         }
     }
 
+    private static void printMenu() {
+        /*for (Option option : Option.values()) {
+            System.out.println(option.getDescription());
+        }*/
+
+        of(Option.values())
+                .map(Option::getDescription)
+                .forEach(System.out::println);
+    }
+
+    private static Option readOption() throws InvalidOptionException {
+        //sprobowac z lambdami
+        System.out.println("Choose option >");
+        Character c = scanner.next().charAt(0);
+        for (Option option : Option.values()) {
+            if (option.accept(c)) {
+                return option;
+            }
+        }
+        throw new InvalidOptionException();
+    }
+
     private static void loadSampleData() {
-        if (movierental.isEmpty()) {
+        if (movieRental.isEmpty()) {
             //adding sample data
             Dvd dvd1 = new Dvd("Terminator", "action");
             Dvd dvd2 = new Dvd("Terminator 2", "action");
@@ -90,45 +70,25 @@ class MovieRentalMain {
             Videotape video2 = new Videotape("Avengers", "action");
             Videotape video3 = new Videotape("Pocahontas 2", "for kids");
 
-            movierental.addCarrier(dvd1);
-            movierental.addCarrier(dvd2);
-            movierental.addCarrier(dvd3);
-            movierental.addCarrier(dvd4);
+            movieRental.addCarrier(dvd1);
+            movieRental.addCarrier(dvd2);
+            movieRental.addCarrier(dvd3);
+            movieRental.addCarrier(dvd4);
 
-            movierental.addCarrier(video1);
-            movierental.addCarrier(video2);
-            movierental.addCarrier(video3);
-        }
-    }
-
-    private static void showMovies(Collection<Carrier> movies) {
-        System.out.println("-----------------------------------------------------------------");
-        for (Carrier carrier : movies) {
-            System.out.println("Title: " + carrier.getName() + ", Category: "
-                    + carrier.getCategory() + ", carrier: " + carrier.getCarrier()
-                    + ", available: " + carrier.isAvailable());
+            movieRental.addCarrier(video1);
+            movieRental.addCarrier(video2);
+            movieRental.addCarrier(video3);
         }
 
+        // addSamples(new char[10], 0, 5);
     }
 
-    private static void sortMoviesByTitle(List<Carrier> movies) {
-        Collections.sort(movies, new Comparator<Carrier>() {
+    private static void addSamples(char[] out, int pos, int len) {
+        if (pos > 0) movieRental.addCarrier(new Videotape(new String(out, 0, pos), "sample"));
+        if (pos < len) for (char c = 'a'; c <= 'r'; c++) {
+            out[pos] = c;
+            addSamples(out, pos + 1, len);
+        }
 
-            @Override
-            public int compare(Carrier o1, Carrier o2) {
-                return o1.getName().compareTo(o2.getName());
-            }
-
-        });
-    }
-
-    private static void sortMoviesByCategory(List<Carrier> movies) {
-        Collections.sort(movies, new Comparator<Carrier>() {
-
-            @Override
-            public int compare(Carrier arg0, Carrier arg1) {
-                return arg0.getCategory().compareTo(arg1.getCategory());
-            }
-        });
     }
 }
