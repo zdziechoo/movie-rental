@@ -1,12 +1,14 @@
 package com.zdziechowski.movierental.dao;
 
+import com.zdziechowski.movierental.carrier.Carrier;
+import com.zdziechowski.movierental.carrier.Dvd;
+import com.zdziechowski.movierental.carrier.NoCarrierOrAlreadyRentException;
+import com.zdziechowski.movierental.carrier.Videotape;
+
 import java.util.*;
 
-import com.zdziechowski.movierental.carrier.*;
-
-public class MovieRental {
-    //private Deque<Carrier> movies = new ArrayDeque<>();
-    private List<Carrier> movies = new ArrayList<>();
+public class MovieRentalLinkedList {
+    private List<Carrier> movies = new LinkedList<>();
 
     private final Comparator<Carrier> byCategory = (c1, c2) -> c1.getCategory().compareTo(c2.getCategory());
     private final Comparator<Carrier> byTitle = (c1, c2) -> c1.getName().compareTo(c2.getName());
@@ -35,28 +37,22 @@ public class MovieRental {
         throw new NoCarrierOrAlreadyRentException();
     }
 
-    //public Deque<Carrier> getMovies() {
     public List<Carrier> getMovies() {
-
-        //Deque<Carrier> result = new ArrayDeque<>();
-        List<Carrier> result = new ArrayList<>();
+        List<Carrier> result = new LinkedList<>();
         for (Carrier m : movies) {
             if (m instanceof Videotape) result.add(new Videotape(m.getName(), m.getCategory()));
             if (m instanceof Dvd) result.add(new Dvd(m.getName(), m.getCategory()));
         }
-		return result;
-	}
+        return result;
+    }
 
     public boolean isEmpty() {
         return movies.isEmpty();
-	}
+    }
 
     public void print() {
 
         System.out.println("w wypozyczalni mamy: " + movies.size() + " filmow");
-        //Array:
         System.out.println(movies.get(movies.size() - 1).getName());
-        // Deque
-        // System.out.println(movies.getLast().getName());
     }
 }

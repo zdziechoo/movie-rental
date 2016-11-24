@@ -9,14 +9,15 @@ import java.util.*;
 
 import com.zdziechowski.movierental.carrier.*;
 import com.zdziechowski.movierental.dao.MovieRental;
+import com.zdziechowski.movierental.dao.MovieRentalLinkedList;
 
 import static com.zdziechowski.movierental.console.Option.END_THE_PROGRAM;
 import static java.util.stream.Stream.of;
 
 
 class MovieRentalMain {
-    private static MovieRental movieRental = new MovieRental();
-    private static Scanner scanner = new Scanner(System.in);
+    private static final MovieRentalLinkedList movieRental = new MovieRentalLinkedList();
+    private static final Scanner scanner = new Scanner(System.in);
     private static boolean end = false;
     public static void main(String[] args) {
         // TODO Auto-generated method stub
@@ -80,12 +81,12 @@ class MovieRentalMain {
             movieRental.addCarrier(video3);
         }
 
-        // addSamples(new char[10], 0, 5);
+        addSamples(new char[10], 0, 5);
     }
 
     private static void addSamples(char[] out, int pos, int len) {
         if (pos > 0) movieRental.addCarrier(new Videotape(new String(out, 0, pos), "sample"));
-        if (pos < len) for (char c = 'a'; c <= 'r'; c++) {
+        if (pos < len) for (char c = 'a'; c <= 'w'; c++) {
             out[pos] = c;
             addSamples(out, pos + 1, len);
         }
